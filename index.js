@@ -11,6 +11,9 @@ class Svg {
   render() {
     return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="300" height="200">${this.textElement}${this.shapeElement}</svg>`;
   }
+  setText(text, color) {
+    this.textElement = `<text x="150" y="125" font-size="60" fill="${color}" text-anchor="middle">${text}</text>`;
+  }
 }
 
 const questions = [
