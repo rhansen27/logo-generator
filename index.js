@@ -1,5 +1,17 @@
 import inquirer from "inquirer";
 import { Circle, Square, Triangle } from "./lib/shape.js";
+import fs from "fs";
+
+class Svg {
+  constructor() {
+    this.textElement = "";
+    this.shapeElement = "";
+  }
+
+  render() {
+    return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="300" height="200">${this.textElement}${this.shapeElement}</svg>`;
+  }
+}
 
 const questions = [
   {
@@ -25,6 +37,18 @@ const questions = [
     prompt: "Please enter the color you would like the logo to be",
   },
 ];
+
+function writeToFile(fileName, data) {
+  console.log(`Attempting to write ${fileName} with ${data}`);
+  fs.writeFile(fileName, data, (err) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log("File written successfully");
+  });
+}
+
 inquirer.prompt(questions).then((answers) => {
   console.log(answers);
 });
