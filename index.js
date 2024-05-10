@@ -20,24 +20,24 @@ const questions = [
   {
     type: "input",
     name: "logoText",
-    prompt: "Please enter up to 3 characters for the text in the logo",
+    message: "Please enter up to 3 characters for the text in the logo",
   },
   {
     type: "input",
     name: "textColor",
-    prompt:
+    message:
       "Please enter the color that you would like your text to be in the logo",
   },
   {
     type: "list",
     name: "logoShape",
-    prompt: "Please select the shape of the logo",
+    message: "Please select the shape of the logo",
     choices: ["Circle", "Square", "Triangle"],
   },
   {
     type: "input",
     name: "logoColor",
-    prompt: "Please enter the color you would like the logo to be",
+    message: "Please enter the color you would like the logo to be",
   },
 ];
 
@@ -52,6 +52,49 @@ function writeToFile(fileName, data) {
   });
 }
 
-inquirer.prompt(questions).then((answers) => {
-  console.log(answers);
-});
+// inquirer.prompt(questions).then((answers) => {
+//   console.log(answers);
+// });
+
+async function init() {
+  console.log("starting program");
+
+  let svgString = "";
+  let svg_file = "logo.svg";
+
+  const answers = await inquirer.prompt(questions);
+
+  if (answers.logoText.length > 3) {
+    console.log("The text must be 3 characters or less");
+    return;
+  }
+
+  console.log(
+    `Creating a ${answers.logoShape} logo with text ${answers.logoText} and color ${answers.logoColor}`
+  );
+
+  if (answers.logoShape === "Circle") {
+    const circle = new Circle();
+    circle.setColor(answers.logoColor);
+    svgString = circle.render();
+  } else if (answers.logoShape === "Square") {
+    const square = new Square();
+    square.setColor(answers.logoColor);
+    svgString = square.render();
+  } else if (answers.logoShape === "Triangle") {
+    const triangle = new Triangle();
+    triangle.setColor(answers.logoColor);
+    svgString = triangle.render();
+  } else {
+    console.log("Invalid shape");
+    return;
+  }
+
+  let svg = new Svg();
+  let text = answers.logoText;
+  let color = answers.textColor;
+  svg.setText(text, color);
+  svg.shapeElement = svgString;
+  writeToFile(svg_file, svg.render());
+}
+init();
