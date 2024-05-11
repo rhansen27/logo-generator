@@ -1,0 +1,5 @@
+
+        <svg height="200" width="300" xmlns="http://www.w3.org/2000/svg">
+            <rect width="150" height="150" x="10" y="10" style="fill:blue;stroke-width:1;stroke:black" />
+            <text x="50" y="100" font-weight='bold' fill= 'black' font-size='30'>tst</text>
+        </svg>
